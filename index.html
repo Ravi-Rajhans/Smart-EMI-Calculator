@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart EMI Calculator & Loan Analyzer</title>
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Ravi Rajhans">
+  <meta name="keywords" content="EMI calculator, loan EMI calculator, monthly EMI, interest calculator, India loan calculator, loan comparison, amortization schedule">
+  <meta name="description" content="Free premium EMI calculator to estimate monthly payment, total payment, interest, compare loans, and view a detailed amortization schedule.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Smart EMI Calculator & Loan Analyzer">
+  <meta property="og:description" content="Calculate monthly EMI, total interest, compare options, and view payment schedules instantly.">
+  <meta property="og:image" content="preview.svg">
+  <meta property="og:site_name" content="Smart EMI Calculator">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Smart EMI Calculator & Loan Analyzer">
+  <meta name="twitter:description" content="Calculate monthly EMI, compare loans, and download payment schedules instantly.">
+  <meta name="twitter:image" content="preview.svg">
+  <meta name="theme-color" content="#10b981">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Smart EMI Calculator",
+      "applicationCategory": "FinanceApplication",
+      "operatingSystem": "Any",
+      "description": "Free EMI calculator to estimate monthly payment, total payment, and total interest.",
+      "creator": {
+        "@type": "Person",
+        "name": "Ravi Rajhans",
+        "email": "ravirajhans2006@gmail.com"
+      },
+      "url": "/"
+    }
+  </script>
+</head>
+<body>
+  <div class="bg-orb orb-1" aria-hidden="true"></div>
+  <div class="bg-orb orb-2" aria-hidden="true"></div>
+
+  <header class="header">
+    <div class="header-content">
+      <div class="logo">
+        <span class="logo-icon">📊</span>
+        <div>
+          <span class="logo-eyebrow">Financial Utilities</span>
+          <h2>Smart EMI Calculator</h2>
+        </div>
+      </div>
+      <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+        <span class="sun-icon">☀️</span>
+        <span class="moon-icon">🌙</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- Tab Controls -->
+    <div class="tabs-nav" role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="calculator-tab" id="tab-calc">
+        <span class="tab-icon">🧮</span> Calculator
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="schedule-tab" id="tab-sched">
+        <span class="tab-icon">📅</span> Amortization Schedule
+      </button>
+      <button class="tab-btn" role="tab" aria-selected="false" aria-controls="compare-tab" id="tab-comp">
+        <span class="tab-icon">⚖️</span> Compare Loans
+      </button>
+    </div>
+
+    <!-- Tab 1: Main Calculator Dashboard -->
+    <section id="calculator-tab" class="tab-panel active" role="tabpanel" aria-labelledby="tab-calc">
+      <div class="dashboard-grid">
+        <!-- Inputs Column -->
+        <div class="card glass-card reveal">
+          <h3>Configure Loan Details</h3>
+          
+          <div class="input-group">
+            <div class="input-header">
+              <label for="principal-number">Loan Amount</label>
+              <div class="input-wrapper-text">
+                <span class="currency-prefix">₹</span>
+                <input id="principal-number" type="number" min="10000" max="100000000" step="50000" value="1000000" required>
+              </div>
+            </div>
+            <div class="slider-wrapper">
+              <input id="principal-slider" type="range" min="10000" max="100000000" step="50000" value="1000000" aria-label="Loan Amount Slider">
+              <div class="slider-labels">
+                <span>₹10K</span>
+                <span>₹50L</span>
+                <span>₹10Cr</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <div class="input-header">
+              <label for="rate-number">Interest Rate (p.a.)</label>
+              <div class="input-wrapper-text">
+                <input id="rate-number" type="number" min="0.1" max="30" step="0.05" value="8.5" required>
+                <span class="unit-suffix">%</span>
+              </div>
+            </div>
+            <div class="slider-wrapper">
+              <input id="rate-slider" type="range" min="1" max="30" step="0.1" value="8.5" aria-label="Interest Rate Slider">
+              <div class="slider-labels">
+                <span>1%</span>
+                <span>15%</span>
+                <span>30%</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <div class="input-header">
+              <label id="tenure-label" for="tenure-number">Loan Tenure</label>
+              <div class="tenure-toggle-container">
+                <button type="button" id="toggle-years" class="toggle-btn active">Years</button>
+                <button type="button" id="toggle-months" class="toggle-btn">Months</button>
+              </div>
+              <div class="input-wrapper-text">
+                <input id="tenure-number" type="number" min="1" max="30" step="1" value="15" required>
+                <span id="tenure-unit-suffix" class="unit-suffix">Yrs</span>
+              </div>
+            </div>
+            <div class="slider-wrapper">
+              <input id="tenure-slider" type="range" min="1" max="30" step="1" value="15" aria-label="Loan Tenure Slider">
+              <div class="slider-labels">
+                <span id="slider-min-tenure">1 Yr</span>
+                <span id="slider-mid-tenure">15 Yrs</span>
+                <span id="slider-max-tenure">30 Yrs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Output Column -->
+        <div class="card glass-card reveal-delay">
+          <h3>Calculated Summary</h3>
+          <div class="results-layout">
+            <!-- Numeric Output -->
+            <div class="results-cards">
+              <div class="result-tile">
+                <span class="result-label">Monthly EMI</span>
+                <p id="emi-value" class="result-val highlight-teal">₹0</p>
+              </div>
+              <div class="result-tile">
+                <span class="result-label">Principal Amount</span>
+                <p id="principal-display" class="result-val">₹0</p>
+              </div>
+              <div class="result-tile">
+                <span class="result-label">Interest Payable</span>
+                <p id="interest-value" class="result-val highlight-rose">₹0</p>
+              </div>
+              <div class="result-tile">
+                <span class="result-label">Total Amount</span>
+                <p id="total-value" class="result-val highlight-indigo">₹0</p>
+              </div>
+            </div>
+
+            <!-- Visual Donut Chart -->
+            <div class="chart-container">
+              <svg class="donut-chart" viewBox="0 0 200 200" width="100%" height="100%">
+                <circle class="donut-ring" cx="100" cy="100" r="70" fill="transparent" stroke-width="20"></circle>
+                <circle id="donut-segment-principal" class="donut-segment principal-segment" cx="100" cy="100" r="70" fill="transparent" stroke-width="20" stroke-dasharray="439.8" stroke-dashoffset="0"></circle>
+                <circle id="donut-segment-interest" class="donut-segment interest-segment" cx="100" cy="100" r="70" fill="transparent" stroke-width="20" stroke-dasharray="439.8" stroke-dashoffset="0"></circle>
+                <text x="100" y="95" class="chart-center-label">Interest Ratio</text>
+                <text id="chart-center-val" x="100" y="120" class="chart-center-val">0%</text>
+              </svg>
+              <div class="chart-legend">
+                <span class="legend-item"><span class="bullet principal-bullet"></span> Principal: <span id="legend-principal-pct">0%</span></span>
+                <span class="legend-item"><span class="bullet interest-bullet"></span> Interest: <span id="legend-interest-pct">0%</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 2: Amortization Schedule -->
+    <section id="schedule-tab" class="tab-panel" role="tabpanel" aria-labelledby="tab-sched">
+      <div class="card glass-card reveal">
+        <div class="table-header-row">
+          <h3>Repayment Schedule</h3>
+          <div class="table-controls">
+            <div class="schedule-view-toggle">
+              <button type="button" id="view-yearly" class="toggle-btn active">Yearly Breakdown</button>
+              <button type="button" id="view-monthly" class="toggle-btn">Monthly Breakdown</button>
+            </div>
+            <button id="download-csv-btn" class="secondary-btn"><span class="btn-icon">📥</span> Export CSV</button>
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table id="schedule-table">
+            <thead>
+              <tr>
+                <th id="period-header">Year</th>
+                <th>Principal Paid</th>
+                <th>Interest Paid</th>
+                <th>Total Payment</th>
+                <th>Balance Outstanding</th>
+              </tr>
+            </thead>
+            <tbody id="schedule-tbody">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: Compare Loans -->
+    <section id="compare-tab" class="tab-panel" role="tabpanel" aria-labelledby="tab-comp">
+      <div class="compare-container">
+        <!-- Input Grids -->
+        <div class="compare-inputs-grid">
+          <!-- Loan A -->
+          <div class="card glass-card reveal">
+            <div class="compare-badge badge-a">Loan Option A</div>
+            <div class="form-grid">
+              <label for="comp-principal-a">Loan Amount (₹)</label>
+              <input id="comp-principal-a" type="number" min="10000" value="1000000">
+
+              <label for="comp-rate-a">Interest Rate (%)</label>
+              <input id="comp-rate-a" type="number" min="0.1" max="30" step="0.1" value="8.5">
+
+              <label for="comp-tenure-a">Tenure (Years)</label>
+              <input id="comp-tenure-a" type="number" min="1" max="30" value="15">
+            </div>
+          </div>
+
+          <!-- Loan B -->
+          <div class="card glass-card reveal-delay">
+            <div class="compare-badge badge-b">Loan Option B</div>
+            <div class="form-grid">
+              <label for="comp-principal-b">Loan Amount (₹)</label>
+              <input id="comp-principal-b" type="number" min="10000" value="1000000">
+
+              <label for="comp-rate-b">Interest Rate (%)</label>
+              <input id="comp-rate-b" type="number" min="0.1" max="30" step="0.1" value="9.0">
+
+              <label for="comp-tenure-b">Tenure (Years)</label>
+              <input id="comp-tenure-b" type="number" min="1" max="30" value="15">
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparison Summary -->
+        <div class="card glass-card reveal" style="animation-delay: 250ms;">
+          <h3>Comparison Analysis</h3>
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Parameters</th>
+                  <th>Option A</th>
+                  <th>Option B</th>
+                  <th>Difference</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Monthly EMI</strong></td>
+                  <td id="comp-emi-a">₹0</td>
+                  <td id="comp-emi-b">₹0</td>
+                  <td id="comp-emi-diff" class="highlight-val">₹0</td>
+                </tr>
+                <tr>
+                  <td><strong>Total Principal</strong></td>
+                  <td id="comp-principal-val-a">₹0</td>
+                  <td id="comp-principal-val-b">₹0</td>
+                  <td id="comp-principal-diff" class="highlight-val">₹0</td>
+                </tr>
+                <tr>
+                  <td><strong>Total Interest</strong></td>
+                  <td id="comp-interest-a">₹0</td>
+                  <td id="comp-interest-b">₹0</td>
+                  <td id="comp-interest-diff" class="highlight-val">₹0</td>
+                </tr>
+                <tr>
+                  <td><strong>Total Payment</strong></td>
+                  <td id="comp-total-a">₹0</td>
+                  <td id="comp-total-b">₹0</td>
+                  <td id="comp-total-diff" class="highlight-val">₹0</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="comparison-verdict" class="comparison-verdict-box">
+            <!-- Dynamically generated verdict -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Essential Hero CTA Section -->
+    <div class="cta-wrap reveal" style="animation-delay: 300ms;">
+      <a class="dh-btn" href="https://digitalheroesco.com" target="_blank" rel="noopener noreferrer">Built for Digital Heroes</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="creator-details">
+        <p>📊 <strong>Smart EMI Calculator</strong> &copy; 2026. All rights reserved.</p>
+        <p>Developed with Google Antigravity &amp; Vercel Hobby tier.</p>
+      </div>
+      <div class="contact-info">
+        <p><strong>Full Name:</strong> Ravi Rajhans</p>
+        <p><strong>Email:</strong> <a href="mailto:ravirajhans2006@gmail.com">ravirajhans2006@gmail.com</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
