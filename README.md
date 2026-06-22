@@ -41,8 +41,8 @@ Open index.html directly in a browser.
 
 ## Submission format (single reply)
 
-- Live tool URL (Vercel):
-- GitHub repo link (public):
+- Live tool URL (Vercel): https://smart-emi-calculator-omega.vercel.app
+- GitHub repo link (public): https://github.com/Ravi-Rajhans/Smart-EMI-Calculator
 - Full name + email: Ravi Rajhans, ravirajhans2006@gmail.com
 - One line (what + personal use):
   Smart EMI Calculator - I have used EMI calculators while planning purchases and checking if a loan EMI fits my monthly budget.
